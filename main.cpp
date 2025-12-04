@@ -20,7 +20,7 @@ int main() {
     contabilidad.agregarGastoPorAgregacion(gastoMateria);
     cout << "\n--- COMPOSICION (Objetos internos) ---" << endl;
     contabilidad.crearGastoPorComposicion("Comision Bancaria", 50.0, "Cargo automatico del banco");
-    contabilidad.crearGastoPorComposicion("Café de la oficina", 120.0, "Antojo");
+    contabilidad.crearGastoPorComposicion("Cafe de la oficina", 120.0, "Antojo");
 
     cout << "\n--- CALCULO INICIAL ---" << endl;
     contabilidad.calcularBalance();
@@ -32,3 +32,4 @@ int main() {
 
     return 0;
 }
+
