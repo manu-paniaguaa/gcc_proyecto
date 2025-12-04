@@ -1,5 +1,3 @@
-// main.cpp
-// Asegúrate de copiar las clases de arriba aquí o incluirlas con #include "ClasesFinanzas.h"
 #include <iostream>
 #include "gastos_ingresos.cpp"
 using namespace std;
@@ -22,9 +20,9 @@ int main() {
     GastoNoDeducible* gasto3 = new GastoNoDeducible("Coca y Fritos", 400.0, "antojito de media noche");
 
     // 5. Agregar al gestor
-    contabilidad.agregarGasto(gasto1);
-    contabilidad.agregarGasto(gasto2);
-    contabilidad.agregarGasto(gasto3);
+    contabilidad.agregarGastoPorAgregacion(gasto1);
+    contabilidad.agregarGastoPorAgregacion(gasto2);
+    contabilidad.agregarGastoPorAgregacion(gasto3);
 
     // 6. Ejecutar cálculo
     contabilidad.calcularBalance();

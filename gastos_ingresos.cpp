@@ -1,8 +1,11 @@
+#pragma once
+
 #include <iostream>
 #include <vector>
 #include <string>
 
 using namespace std;
+
 
 class Ingreso {
 private:
@@ -11,19 +14,16 @@ private:
     float montoNeto;
 
 public:
-
     Ingreso(float monto, int tasa) {
         this->montoBruto = monto;
         this->tasaImpuesto = tasa;
         calcularNeto();
     }
-
     
     void calcularNeto() {
         float impuesto = montoBruto * (tasaImpuesto / 100.0f);
         montoNeto = montoBruto - impuesto;
     }
-
 
     void setMontoBruto(float monto) {
         montoBruto = monto;
@@ -48,14 +48,15 @@ protected:
 
 public:
     Gasto(string nom, float m) : nombre(nom), monto(m) {}
+    virtual ~Gasto() {}
 
     float getMonto() const { return monto; }
     void setMonto(float m) { monto = m; }
     string getNombre() const { return nombre; }
 
-
     virtual void procesarGasto(float &saldoActual) = 0;
 };
+
 
 class GastoDeducible : public Gasto {
 private:
@@ -71,10 +72,10 @@ public:
 
     void procesarGasto(float &saldoActual) override {
         if ((tipo == "comida" || tipo == "mercancia" || tipo == "gasolina") && tieneFactura) {
-            cout << "es gasto deducible " << nombre << ": Gasto aplicado. Se resta $" << monto << " del saldo." << endl;
+            cout << "[DEDUCIBLE] " << nombre << ": Gasto aplicado. Se resta $" << monto << " del saldo." << endl;
             saldoActual -= monto; 
         } else {
-            cout << "No es deducible " << nombre << ": No cumple requisitos para ser deducible (Falta factura o el tipo no es deducible)." << endl;
+            cout << "[ERROR] " << nombre << ": No es deducible (Falta factura o tipo invalido)." << endl;
         }
     }
 };
@@ -92,28 +93,41 @@ public:
     string getMotivo() { return motivo; }
 
     void procesarGasto(float &saldoActual) override {
-        cout << "NO DEDUCIBLE " << nombre << " (" << motivo << "): Se resta $" << monto << " del saldo. Pero no fue Facturado ni deducido del reporte anual ante el SAT" << endl;
+        cout << "[NO DEDUCIBLE] " << nombre << " (" << motivo << "): Se resta $" << monto << " del saldo (Sin beneficios fiscales)." << endl;
         saldoActual -= monto;
     }
 };
 
-
 class GestorFinanzas {
 private:
     Ingreso* miIngreso;
-    vector<Gasto*> listaGastos;
+    vector<Gasto*> listaGastos; 
     float saldoFinal;
 
 public:
     GestorFinanzas() : miIngreso(nullptr), saldoFinal(0.0) {}
 
-    void setIngreso(Ingreso* ing) {
-        miIngreso = ing;
-        saldoFinal = ing->getMontoNeto();
+    ~GestorFinanzas() {
+        for (Gasto* g : listaGastos) {
+            delete g;
+        }
+        listaGastos.clear();
     }
 
-    void agregarGasto(Gasto* g) {
+    void setIngreso(Ingreso* ing) {
+        miIngreso = ing;
+        if(miIngreso) saldoFinal = ing->getMontoNeto();
+    }
+
+    void agregarGastoPorAgregacion(Gasto* g) {
         listaGastos.push_back(g);
+        cout << ">> Agregacion: Se registro el gasto externo '" << g->getNombre() << "'" << endl;
+    }
+
+    void crearGastoPorComposicion(string nombre, float monto, string motivo) {
+        GastoNoDeducible* nuevoGasto = new GastoNoDeducible(nombre, monto, motivo);
+        listaGastos.push_back(nuevoGasto);
+        cout << ">> Composicion: Se creo internamente el gasto '" << nombre << "'" << endl;
     }
 
     void calcularBalance() {
@@ -122,14 +136,15 @@ public:
             return;
         }
         
+        saldoFinal = miIngreso->getMontoNeto();
+
         miIngreso->mostrarInfo();
-        cout << "\n--- PROCESANDO GASTOS ---" << endl;
+        cout << "\nPROCESANDO LISTA DE GASTOS" << endl;
 
         for (Gasto* g : listaGastos) {
             g->procesarGasto(saldoFinal);
         }
 
-        cout << "\n-----------------------------" << endl;
         cout << "SALDO FINAL DISPONIBLE: $" << saldoFinal << endl;
     }
 };

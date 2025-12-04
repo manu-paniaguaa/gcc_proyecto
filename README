@@ -2,4 +2,12 @@ PROYECTO JOSE MANUEL PANIAGUA AMATE
 A01715208
 
 Este proyecto se encargara de calcular cuanto se debe al SAT de impuestos de una empresa recibiendo los ingresos, 
-gastos deducibles y los gastos no deducibles 
+gastos deducibles y los gastos no deducibles, la herramienta solo sabe diferenciar entre gastos deducibles y no deducibles 
+y en base al ingreso total mostrar el margen o ganancia acumulada despues de los gastos que se registren
+el codigo se corre en terminal con:
+"g++ main.cpp -o prueba.exe"
+y luego:
+".\prueba.exe"
+
+en caso de querer modificar valores, textos o ingresos por default del codigo se tienen que modiificar directamente en 
+main.cpp lineas 12, 16, 17 y 20 y la 31 
