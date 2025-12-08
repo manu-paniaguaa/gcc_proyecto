@@ -1,1 +1,2 @@
-Favor de revisar los comentarios agregados a ambos archivos para cumplir con buenas practicas.
+Favor de revisar los comentarios agregados a ambos archivos para cumplir con buenas practicas. 
+Tambien importante revisar el UML actualizado.
