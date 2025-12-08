@@ -7,7 +7,5 @@ y en base al ingreso total mostrar el margen o ganancia acumulada despues de los
 el codigo se corre en terminal con:
 "g++ main.cpp -o prueba.exe"
 y luego:
-".\prueba.exe"
-
-en caso de querer modificar valores, textos o ingresos por default del codigo se tienen que modiificar directamente en 
-main.cpp lineas 12, 16, 17 y 20 y la 31 
+".\prueba.exe" (Windows)
+"./prueba" (Mac y Linux)
