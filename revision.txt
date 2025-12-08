@@ -1,2 +1,3 @@
 Favor de revisar los comentarios agregados a ambos archivos para cumplir con buenas practicas. 
 Tambien importante revisar el UML actualizado.
+El README ya incluye ejecucion para Mac y Linux
