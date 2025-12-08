@@ -1,1 +1,1 @@
-Favor de revisar las correcciones en el README
+Favor de revisar los comentarios agregados a ambos archivos para cumplir con buenas practicas.
